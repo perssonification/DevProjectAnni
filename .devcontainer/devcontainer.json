@@ -1,0 +1,20 @@
+{
+  "name": "gitproject (Docker Compose)",
+  "build": {
+    "context": "..",
+    "dockerfile": "../Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-php.php-pack",
+        "shahriarshafin.bootstrap-5-snippets",
+        "Hridoy.jquery-snippets",
+        "xdebug.php-debug"
+      ]
+    }
+  },
+  "forwardPorts": [8080],
+  "postStartCommand": "php -S 0.0.0.0:8080 -t /workspaces/gitProject > server.log 2>&1 &"
+
+}
