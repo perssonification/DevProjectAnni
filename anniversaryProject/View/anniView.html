@@ -1,0 +1,161 @@
+<?php
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 1 Year</title>
+  <link rel="stylesheet" href="styling.css" />
+</head>
+<body>
+
+  <div class="countdown" id="countdown">--:--:--</div>
+
+  <div class="container" id="login-container" style="display: none;">
+    <form id="signin-form">
+      <div class="riddle">
+        <h3>SOLVE ME FOR THE LOCK & KEY</h3>
+
+        I’m what I call you when I’m feeling sweet,  
+        A nickname you have that's soft and neat.  
+        Seven letters, playful and fun  
+        Guess me right, and you're halfway done.
+
+        Now for the key, it’s a special date,  
+        When sparks flew and sealed our fate.  
+        It’s the date our story officially begun.
+
+        Figure both out, and you'll unlock the way.
+      </div>
+
+      <input type="text" placeholder="Username or Email" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
+  <div id="video-preview" style="display:none;">
+    <video id="preview-video"></video>
+  </div>
+  <div class="panels" id="accordion" style="display: none;">
+    <div class="panel active" style="background-image: url('image/image7.jpg');">
+        <h3>WE STARTED AS SPARKS, NOW WE’RE A FLAME,</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image3.jpg');">
+        <h3>A JOURNEY OF LOVE, NEVER THE SAME.</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image4.jpg');">
+        <h3> LOOK BACK WITH ME, JUST PRESS PLAY</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image2.jpg');">
+        <h3>OUR STORY UNFOLDS IN A BEAUTIFUL WAY.</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image1.jpg');">
+        <h3>MOMENTS WE’VE SHARED, BOTH BIG AND SMALL,</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image6.jpg');">
+        <h3>CAPTURED IN CLIPS THAT SAYS IT ALL.</h3>
+    </div>
+    <div class="panel" style="background-image: url('image/image8.jpg');">
+        <h3>SO SIT BACK WITH ME, LOVE, AND LETS WATCH US GROW </h3>
+    </div>
+    <div class="panel video-panel" style="background-image: url('image/image5.jpg');"></div>
+  </div>
+
+  <script>
+  let countdownElement = document.getElementById('countdown');
+  let form = document.getElementById('signin-form');
+  let loginContainer = document.getElementById('login-container');
+  let accordion = document.getElementById('accordion');
+  let panels = document.querySelectorAll('.panel');
+
+  let video = document.createElement('video');
+  video.id = 'preview-video';
+  video.controls = true;
+  video.autoplay = true;
+  video.style.width = '100%';
+  video.style.borderRadius = '10px';
+  video.style.boxShadow = '0 0 20px #00bfff';
+
+  let targetDate = new Date('2025-06-29T17:00:00');
+
+  function updateCountdown() {
+  let now = new Date();
+  let diff = targetDate - now;
+
+  if (diff <= 0) {
+    countdownElement.style.display = 'none';
+    loginContainer.style.display = 'block';
+    form.classList.add('active');
+    clearInterval(timerInterval);
+    return;
+  }
+
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+  let seconds = Math.floor((diff / 1000) % 60);
+
+  countdownElement.textContent =
+    `${days}d ${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(seconds).padStart(2, '0')}s`;
+}
+
+  updateCountdown();
+  let timerInterval = setInterval(updateCountdown, 1000);
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    let username = form.querySelector('input[type="text"]').value.trim().toLowerCase();
+    let password = form.querySelector('input[type="password"]').value.trim();
+
+    if (username === 'munchie' && password === '29062024') {
+      loginContainer.style.display = 'none';
+      accordion.style.display = 'flex';
+    } else {
+      alert('Hmm… try again, love.');
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    panels.forEach(panel => {
+      panel.addEventListener('click', () => {
+        panels.forEach(p => p.classList.remove('active'));
+
+        if (panel.classList.contains('video-panel')) {
+          let h3 = panel.querySelector('h3');
+          if (h3) {
+            h3.style.display = 'none';
+          }
+
+          video.src = 'image/lifeInAYear.mp4';
+          document.querySelector('.panels').appendChild(video);
+        } else {
+          panel.classList.add('active');
+        }
+      });
+    });
+
+    function closeVideo() {
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      video.remove();
+      accordion.style.display = 'flex';
+    }
+
+    video.addEventListener('ended', closeVideo);
+
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        closeVideo();
+      }
+    });
+  });
+</script>
+
+  
+</body>
+</html>
+
