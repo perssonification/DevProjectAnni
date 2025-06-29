@@ -69,6 +69,7 @@
   let loginContainer = document.getElementById('login-container');
   let accordion = document.getElementById('accordion');
   let panels = document.querySelectorAll('.panel');
+  let timerInterval = setInterval(updateCountdown, 1000);
 
   let video = document.createElement('video');
   video.id = 'preview-video';
@@ -102,7 +103,6 @@
 }
 
   updateCountdown();
-  let timerInterval = setInterval(updateCountdown, 1000);
 
   form.addEventListener('submit', e => {
     e.preventDefault();
